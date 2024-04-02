@@ -33,13 +33,11 @@ Suppose you want to add a new payment method called BitcoinPayment. Without Soli
 you might be tempted to directly modify the SolidPrinciples.PaymentProcessor class to accommodate the new payment method:
 * */
 
-class Payment {
-    public void pay() {
-        // Default behavior
-    }
+interface Payment {
+     void pay();
 }
 
-class CreditCardPayment extends Payment {
+class CreditCardPayment implements Payment {
     @Override
     public void pay() {
         System.out.println("Credit card payment processed");
@@ -47,14 +45,14 @@ class CreditCardPayment extends Payment {
     }
 }
 
-class PayPalPayment extends Payment {
+class PayPalPayment implements Payment {
     @Override
     public void pay() {
         System.out.println("PayPal payment processed");
         // SolidPrinciples.Payment processing logic specific to PayPal payments
     }
 }
-class BitCoinPayment extends Payment {
+class BitCoinPayment implements Payment {
     @Override
     public void pay() {
         System.out.println("Bitcoin payment processed");

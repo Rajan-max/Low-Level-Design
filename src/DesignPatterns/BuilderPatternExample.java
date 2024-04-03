@@ -13,27 +13,31 @@ We have a Pizza class representing the complex object we want to build.
 There's an abstract PizzaBuilder class with methods for building different parts of the pizza.
 Concrete builder classes (MargheritaPizzaBuilder and PepperoniPizzaBuilder)
 extend the PizzaBuilder class to provide specific implementations for building different types of pizzas.
-The Chef class acts as the director, controlling the construction process and working with different builders to create pizzas.
+The Chef class acts as the director, controlling the construction process and guide the steps and working with different builders to create pizzas.
 In the main method, we demonstrate how the builder pattern is used to create two different types of pizzas.
 * */
 
 
+// Abstract builder class
+interface PizzaBuilder {
+
+    void buildDough();
+
+    void buildSauce();
+
+    void buildTopping();
+
+}
 
 // Product class
 class Pizza {
-    private String dough;
-    private String sauce;
-    private String topping;
+    private final String dough;
+    private final String sauce;
+    private final String topping;
 
-    public void setDough(String dough) {
+    public Pizza(String dough, String sauce, String topping) {
         this.dough = dough;
-    }
-
-    public void setSauce(String sauce) {
         this.sauce = sauce;
-    }
-
-    public void setTopping(String topping) {
         this.topping = topping;
     }
 
@@ -42,55 +46,59 @@ class Pizza {
     }
 }
 
-// Abstract builder class
-abstract class PizzaBuilder {
-    protected Pizza pizza = new Pizza();
-
-    public abstract void buildDough();
-
-    public abstract void buildSauce();
-
-    public abstract void buildTopping();
-
-    public Pizza getPizza() {
-        return pizza;
-    }
-}
-
 // Concrete builder classes
-class MargheritaPizzaBuilder extends PizzaBuilder {
+class MargheritaPizzaBuilder implements PizzaBuilder {
+
+    String doughType;
+    String sauceType;
+    String toppingType;
+
     @Override
     public void buildDough() {
-        pizza.setDough("thin crust");
+        doughType = "pan crust";
     }
 
     @Override
     public void buildSauce() {
-        pizza.setSauce("tomato");
+        sauceType = "tomato";
     }
 
     @Override
     public void buildTopping() {
-        pizza.setTopping("mozzarella cheese");
+        toppingType = "mozzarella cheese";
+    }
+
+    public Pizza getResult() {
+        return new Pizza(doughType, sauceType, toppingType);
     }
 }
 
-class PepperoniPizzaBuilder extends PizzaBuilder {
+class PepperoniPizzaBuilder implements PizzaBuilder {
+    String doughType;
+    String sauceType;
+    String toppingType;
+
+
     @Override
     public void buildDough() {
-        pizza.setDough("pan crust");
+        doughType = "pan crust";
     }
 
     @Override
     public void buildSauce() {
-        pizza.setSauce("spicy");
+        sauceType = "spicy";
     }
 
     @Override
     public void buildTopping() {
-        pizza.setTopping("pepperoni");
+        toppingType = "peperoni";
+    }
+
+    public Pizza getResult() {
+        return new Pizza(doughType, sauceType, toppingType);
     }
 }
+
 
 // Director class
 class Chef {
@@ -100,9 +108,6 @@ class Chef {
         this.pizzaBuilder = pizzaBuilder;
     }
 
-    public Pizza getPizza() {
-        return pizzaBuilder.getPizza();
-    }
 
     public void constructPizza() {
         pizzaBuilder.buildDough();
@@ -115,19 +120,13 @@ public class BuilderPatternExample {
     public static void main(String[] args) {
         Chef chef = new Chef();
 
-        PizzaBuilder margheritaBuilder = new MargheritaPizzaBuilder();
+        MargheritaPizzaBuilder margheritaBuilder = new MargheritaPizzaBuilder();
         chef.setPizzaBuilder(margheritaBuilder);
         chef.constructPizza();
 
-        Pizza margheritaPizza = chef.getPizza();
+        Pizza margheritaPizza = margheritaBuilder.getResult();
         margheritaPizza.describe(); // Output: Pizza with thin crust dough, tomato sauce, and mozzarella cheese topping.
 
-        PizzaBuilder pepperoniBuilder = new PepperoniPizzaBuilder();
-        chef.setPizzaBuilder(pepperoniBuilder);
-        chef.constructPizza();
-
-        Pizza pepperoniPizza = chef.getPizza();
-        pepperoniPizza.describe(); // Output: Pizza with pan crust dough, spicy sauce, and pepperoni topping.
     }
 }
 

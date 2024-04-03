@@ -36,10 +36,10 @@ class SmartPhone implements TextMessageSender, MultimediaMessageSender {
 public class InterfaceSegregation {
     public static void main(String[] args) {
         TextMessageSender phone = new Phone();
-        TextMessageSender smartphone = new SmartPhone();
+        SmartPhone smartphone = new SmartPhone();
 
         phone.sendTextMessage("Alice", "Hello from phone");
         smartphone.sendTextMessage("Bob", "Hello from smartphone");
-        ((SmartPhone) smartphone).sendMultimediaMessage("Charlie", new byte[]{0x01, 0x02, 0x03});
+        smartphone.sendMultimediaMessage("Charlie", new byte[]{0x01, 0x02, 0x03});
     }
 }

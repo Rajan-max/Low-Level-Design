@@ -50,7 +50,7 @@ class Square extends Shape {
 
 
 public class Liskov {
-    public static void printArea(Shape shape) {
+    private static void printArea(Shape shape) {
         System.out.println("Area: " + shape.calculateArea());
     }
 

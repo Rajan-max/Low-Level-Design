@@ -1,5 +1,8 @@
 package SolidPrinciples;//Dependency Inversion Principle
 /*
+This means that a particular class should not depend directly on another class, but on an abstraction (interface) of this class.
+Applying this principle reduces dependency on specific implementations and makes our code more reusable.
+
 In this improved version, the SolidPrinciples.NotificationService depends on the SolidPrinciples.NotificationSender interface rather than concrete
 implementations. Now, you can easily switch between email and SMS senders without modifying the SolidPrinciples.NotificationService class.
 This adheres to the Dependency Inversion Principle.

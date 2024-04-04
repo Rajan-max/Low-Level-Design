@@ -1,4 +1,4 @@
-package DesignPatterns;
+package DesignPatterns.Creational;
 
 /*
   The Singleton design pattern is a creational pattern that ensures a class has only one instance and

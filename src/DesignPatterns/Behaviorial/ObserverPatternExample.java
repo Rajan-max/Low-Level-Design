@@ -1,4 +1,4 @@
-package DesignPatterns;
+package DesignPatterns.Behaviorial;
 
 /*
   The Observer design pattern is a behavioral design pattern where an object, known as the subject, maintains a list of

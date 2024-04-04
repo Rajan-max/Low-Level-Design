@@ -1,4 +1,4 @@
-package DesignPatterns;
+package DesignPatterns.Behaviorial;
 
 /*
   The Strategy Design Pattern is a behavioral pattern that allows you to define a family of algorithms,

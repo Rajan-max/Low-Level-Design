@@ -1,4 +1,4 @@
-package DesignPatterns;
+package DesignPatterns.Creational;
 
 /*
 The Factory Design Pattern is a creational pattern that provides an interface for creating objects in a super class,

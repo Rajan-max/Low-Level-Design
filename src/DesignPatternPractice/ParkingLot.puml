@@ -1,0 +1,52 @@
+@startuml
+class Vehicle {
+    - licensePlate: String
+    - color: String
+    - type: VehicleType
+    + Vehicle(licensePlate: String, color: String, type: VehicleType)
+    + getLicensePlate(): String
+    + getColor(): String
+    + getType(): VehicleType
+}
+
+enum VehicleType {
+    CAR
+    MOTORBIKE
+    TRUCK
+}
+
+class ParkingSpot {
+    - spotNumber: int
+    - available: boolean
+    - vehicle: Vehicle
+    + ParkingSpot(spotNumber: int)
+    + getSpotNumber(): int
+    + isAvailable(): boolean
+    + getVehicle(): Vehicle
+    + parkVehicle(vehicle: Vehicle): void
+    + removeVehicle(): void
+}
+
+class ParkingLot {
+    - spots: List<ParkingSpot>
+    + ParkingLot(capacity: int)
+    + getSpots(): List<ParkingSpot>
+}
+
+class ParkingController {
+    - parkingLot: ParkingLot
+    + ParkingController(parkingLot: ParkingLot)
+    + parkVehicle(vehicle: Vehicle): ParkingSpot
+    + removeVehicle(vehicle: Vehicle): boolean
+    + findAvailableSpot(type: VehicleType): ParkingSpot
+    + calculateTwoWheelerFee(): double
+    + calculateFourWheelerFee(): double
+}
+
+Vehicle "1" *-- "0..1" VehicleType : has
+
+ParkingLot "1" *-- "*" ParkingSpot : contains
+ParkingController "1" -- "1" ParkingLot : manages
+ParkingController "1" -- "*" Vehicle : interacts with
+
+@enduml

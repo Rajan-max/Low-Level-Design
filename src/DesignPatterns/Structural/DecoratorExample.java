@@ -4,6 +4,7 @@ package DesignPatterns.Structural;
 /*
   The Decorator design pattern is a structural pattern that allows behavior to be added to an individual object,
   either statically or dynamically, without affecting the behavior of other objects from the same class.
+  It is particularly useful when you need to add new functionality to objects at runtime or when subclassing is impractical.
 
   Involves a base component (interface or abstract class) and decorators that add specific behaviors
   to the component. The client interacts directly with the decorated component.

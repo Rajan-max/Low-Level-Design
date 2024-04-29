@@ -1,0 +1,56 @@
+@startuml
+
+interface VendingMachineState {
+    {abstract} void insertMoney(int amount) throws Exception
+    {abstract} void selectItem(String item) throws Exception
+    {abstract} void dispenseItem() throws Exception
+}
+
+class NoMoneyState {
+    - VendingMachine vendingMachine
+    + NoMoneyState(VendingMachine vendingMachine)
+    + void insertMoney(int amount)
+    + void selectItem(String item) throws Exception
+    + void dispenseItem() throws Exception
+}
+
+class HasMoneyState {
+    - VendingMachine vendingMachine
+    + HasMoneyState(VendingMachine vendingMachine)
+    + void insertMoney(int amount) throws Exception
+    + void selectItem(String item)
+    + void dispenseItem() throws Exception
+}
+
+class SoldState {
+    - VendingMachine vendingMachine
+    + SoldState(VendingMachine vendingMachine)
+    + void insertMoney(int amount) throws Exception
+    + void selectItem(String item) throws Exception
+    + void dispenseItem()
+}
+
+class VendingMachine {
+    - VendingMachineState noMoneyState
+    - VendingMachineState hasMoneyState
+    - VendingMachineState soldState
+    - VendingMachineState currentState
+    + VendingMachine()
+    + void setState(VendingMachineState state)
+    + VendingMachineState getNoMoneyState()
+    + VendingMachineState getHasMoneyState()
+    + VendingMachineState getSoldState()
+    + void insertMoney(int amount) throws Exception
+    + void selectItem(String item) throws Exception
+    + void dispenseItem() throws Exception
+}
+
+VendingMachineState <|.. NoMoneyState
+VendingMachineState <|.. HasMoneyState
+VendingMachineState <|.. SoldState
+
+NoMoneyState -down-> VendingMachine
+HasMoneyState -down-> VendingMachine
+SoldState -down-> VendingMachine
+
+@enduml

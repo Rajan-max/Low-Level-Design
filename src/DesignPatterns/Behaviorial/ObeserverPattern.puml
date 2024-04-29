@@ -1,0 +1,37 @@
+@startuml
+
+interface Subject {
+    {abstract} void registerObserver(Observer observer)
+    {abstract} void removeObserver(Observer observer)
+    {abstract} void notifyObservers()
+}
+
+interface Observer {
+    {abstract} void update(float temperature)
+}
+
+class WeatherStation {
+    - List<Observer> observers
+    - float temperature
+
+    + WeatherStation()
+    + void setTemperature(float temperature)
+    + void registerObserver(Observer observer)
+    + void removeObserver(Observer observer)
+    + void notifyObservers()
+}
+
+class BrowserDisplay {
+    + void update(float temperature)
+}
+
+class MobileAppDisplay {
+    + void update(float temperature)
+}
+
+Subject <|.. WeatherStation
+Observer <|.. BrowserDisplay
+Observer <|.. MobileAppDisplay
+WeatherStation *--> Observer : composition
+
+@enduml

@@ -1,0 +1,27 @@
+@startuml
+
+interface SortingStrategy {
+    {abstract} void sort(int[] array)
+}
+
+class BubbleSort {
+    {implement} void sort(int[] array)
+}
+
+class QuickSort {
+    {implement} void sort(int[] array)
+}
+
+class ArraySorter {
+    -SortingStrategy sortingStrategy
+
+    +void setSortingStrategy(SortingStrategy sortingStrategy)
+    +void sortArray(int[] array)
+}
+
+SortingStrategy <|.. BubbleSort :implement
+SortingStrategy <|.. QuickSort: implement
+
+ArraySorter o-- SortingStrategy : assosiated with /'We can also use -->'/
+
+@enduml

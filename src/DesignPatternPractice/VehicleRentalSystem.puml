@@ -1,0 +1,70 @@
+@startuml
+
+class User {
+    - userId: int
+    - name: String
+    + User(userId: int, name: String)
+    + getUserId(): int
+    + getName(): String
+}
+
+abstract class Vehicle {
+    - vehicleId: int
+    - type: String
+    + Vehicle(vehicleId: int, type: String)
+    + getVehicleId(): int
+    + getType(): String
+}
+
+class TwoWheeler {
+    + TwoWheeler(vehicleId: int)
+}
+
+class FourWheeler {
+    + FourWheeler(vehicleId: int)
+}
+
+class Store {
+    - vehicles: List<Vehicle>
+    + addVehicle(vehicle: Vehicle)
+    + getAvailableVehicles(): List<Vehicle>
+}
+
+class Payment {
+    + processPayment(amount: double): boolean
+}
+
+class RentalSystem {
+    - users: List<User>
+    - transactions: List<RentalTransaction>
+    - store: Store
+    - payment: Payment
+    + RentalSystem(store: Store, payment: Payment)
+    + addUser(user: User)
+    + rentVehicle(user: User, vehicle: Vehicle): RentalTransaction
+    + returnVehicle(transaction: RentalTransaction)
+}
+
+class RentalTransaction {
+    - rentalId: int
+    - user: User
+    - vehicle: Vehicle
+    - rentalDuration: int
+    + RentalTransaction(rentalId: int, user: User, vehicle: Vehicle, rentalDuration: int)
+    + getRentalId(): int
+    + getUser(): User
+    + getVehicle(): Vehicle
+    + getRentalDuration(): int
+}
+
+User --> RentalTransaction
+Vehicle <|-- TwoWheeler
+Vehicle <|-- FourWheeler
+Store o-- Vehicle
+RentalSystem o-- User
+RentalSystem o-- RentalTransaction
+RentalSystem o-- Store
+RentalSystem o-- Payment
+RentalSystem --> RentalTransaction
+
+@enduml

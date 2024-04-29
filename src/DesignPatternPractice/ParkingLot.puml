@@ -1,18 +1,23 @@
 @startuml
+
+'A -- B       // Association
+'B o-- C      // Aggregation
+'C *-- A      // Composition
+'B <|-- C     // Generalization/Inheritance
+'C ..|> A     // Realization
+'A ..> B      // Dependency
+
 class Vehicle {
-    - licensePlate: String
-    - color: String
+    - vehicleNumber: String
     - type: VehicleType
-    + Vehicle(licensePlate: String, color: String, type: VehicleType)
-    + getLicensePlate(): String
-    + getColor(): String
+    + Vehicle(vehicleNumber: String, type: VehicleType)
+    + getVehicleNumber(): String
     + getType(): VehicleType
 }
 
 enum VehicleType {
     CAR
     MOTORBIKE
-    TRUCK
 }
 
 class ParkingSpot {
@@ -35,18 +40,31 @@ class ParkingLot {
 
 class ParkingController {
     - parkingLot: ParkingLot
+    -paymentProcess: PaymentProcess
     + ParkingController(parkingLot: ParkingLot)
     + parkVehicle(vehicle: Vehicle): ParkingSpot
-    + removeVehicle(vehicle: Vehicle): boolean
+    + removeVehicle(vehicle: Vehicle): double
     + findAvailableSpot(type: VehicleType): ParkingSpot
-    + calculateTwoWheelerFee(): double
-    + calculateFourWheelerFee(): double
+
+}
+interface PaymentProcess {
+     calculateParkingFee(): double
+}
+
+class TwoWheelerPayment {
+    calculateParkingFeeFee(): double
+}
+class FourWheelerPayment{
+   calculateParkingFeeFee(): double
 }
 
 Vehicle "1" *-- "0..1" VehicleType : has
 
 ParkingLot "1" *-- "*" ParkingSpot : contains
-ParkingController "1" -- "1" ParkingLot : manages
+ParkingController  ..>  ParkingLot : has
 ParkingController "1" -- "*" Vehicle : interacts with
+PaymentProcess ..|> TwoWheelerPayment
+PaymentProcess ..|> FourWheelerPayment
+ParkingController  ..>  PaymentProcess : has
 
 @enduml

@@ -1,0 +1,30 @@
+@startuml
+
+class PurchaseRequest {
+    - String item
+    - double amount
+
+    + PurchaseRequest(String item, double amount)
+    + String getItem()
+    + double getAmount()
+}
+
+interface PurchaseApprover {
+    {abstract} void setNextApprover(PurchaseApprover nextApprover)
+    {abstract} void processRequest(PurchaseRequest request)
+}
+
+class Manager {
+    - double spendingLimit
+    - String level
+    - PurchaseApprover nextApprover
+
+    + Manager(double spendingLimit, String level)
+    + void setNextApprover(PurchaseApprover nextApprover)
+    + void processRequest(PurchaseRequest request)
+}
+
+PurchaseRequest --> PurchaseApprover
+PurchaseApprover <|.. Manager
+
+@enduml

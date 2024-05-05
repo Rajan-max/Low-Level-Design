@@ -1,0 +1,24 @@
+@startuml
+
+interface Shape {
+    {abstract} void draw()
+}
+
+class Circle {
+    + void draw()
+}
+
+class Square {
+    + void draw()
+}
+
+class ShapeFactory {
+    + Shape createShape(String shapeType)
+}
+
+Shape <|.. Circle
+Shape <|.. Square
+
+ShapeFactory --> Shape
+
+@enduml

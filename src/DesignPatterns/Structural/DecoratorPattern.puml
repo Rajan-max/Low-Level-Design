@@ -1,0 +1,36 @@
+@startuml
+
+interface Coffee {
+    +cost(): double
+    +description(): String
+}
+
+interface CoffeeDecorator {
+}
+
+class SimpleCoffee {
+    +cost(): double
+    +description(): String
+}
+
+class MilkDecorator {
+    -baseCoffee: Coffee
+    +MilkDecorator(baseCoffee: Coffee)
+    +cost(): double
+    +description(): String
+}
+
+class SugarDecorator {
+    -baseCoffee: Coffee
+    +SugarDecorator(baseCoffee: Coffee)
+    +cost(): double
+    +description(): String
+}
+
+Coffee <|-- SimpleCoffee
+Coffee <|.. CoffeeDecorator
+CoffeeDecorator --up> Coffee
+CoffeeDecorator <|-- MilkDecorator
+CoffeeDecorator <|-- SugarDecorator
+
+@enduml

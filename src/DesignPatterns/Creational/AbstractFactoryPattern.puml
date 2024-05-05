@@ -1,0 +1,60 @@
+@startuml
+
+interface CPU {
+    {abstract} String getSpecification()
+}
+
+class IntelCPU {
+    + String getSpecification()
+}
+
+class AMDCPU {
+    + String getSpecification()
+}
+
+interface GPU {
+    {abstract} String getSpecification()
+}
+
+class NvidiaGPU {
+    + String getSpecification()
+}
+
+class AMDGPU {
+    + String getSpecification()
+}
+
+interface ComputerFactory {
+    {abstract} CPU createCPU()
+    {abstract} GPU createGPU()
+}
+
+class HighEndComputerFactory {
+    + CPU createCPU()
+    + GPU createGPU()
+}
+
+class MidRangeComputerFactory {
+    + CPU createCPU()
+    + GPU createGPU()
+}
+
+class ComputerShop {
+    - ComputerFactory computerFactory
+    + ComputerShop(ComputerFactory computerFactory)
+    + assembleComputer()
+}
+
+ComputerFactory <|.. HighEndComputerFactory
+ComputerFactory <|.. MidRangeComputerFactory
+
+CPU <|.. IntelCPU
+CPU <|.. AMDCPU
+GPU <|.. NvidiaGPU
+GPU <|.. AMDGPU
+
+ComputerFactory-left->CPU : has
+ComputerFactory-right->GPU :has
+ComputerShop --> ComputerFactory
+
+@enduml

@@ -1,0 +1,53 @@
+@startuml
+
+interface PizzaBuilder {
+    {abstract} void buildDough()
+    {abstract} void buildSauce()
+    {abstract} void buildTopping()
+}
+
+class Pizza {
+    - String dough
+    - String sauce
+    - String topping
+
+    + Pizza(String dough, String sauce, String topping)
+    + describe()
+}
+
+PizzaBuilder <|.. MargheritaPizzaBuilder
+PizzaBuilder <|.. PepperoniPizzaBuilder
+
+class MargheritaPizzaBuilder {
+    - String doughType
+    - String sauceType
+    - String toppingType
+
+    + void buildDough()
+    + void buildSauce()
+    + void buildTopping()
+    + Pizza getResult()
+}
+
+class PepperoniPizzaBuilder {
+    - String doughType
+    - String sauceType
+    - String toppingType
+
+    + void buildDough()
+    + void buildSauce()
+    + void buildTopping()
+    + Pizza getResult()
+}
+
+class Chef {
+    - PizzaBuilder pizzaBuilder
+
+    + void setPizzaBuilder(PizzaBuilder pizzaBuilder)
+    + void constructPizza()
+}
+
+PizzaBuilder ---right-> Pizza
+Chef --right-> PizzaBuilder
+
+@enduml

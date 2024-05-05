@@ -1,0 +1,26 @@
+@startuml
+
+interface Vehicle {
+    {abstract} int getTankCapacity()
+    {abstract} int getSeatingCapacity()
+}
+
+class Car {
+    + int getTankCapacity()
+    + int getSeatingCapacity()
+}
+
+class NullVehicle {
+    + int getTankCapacity()
+    + int getSeatingCapacity()
+}
+
+class VehicleFactory {
+    + static Vehicle getVehicleObject(String vehicleType)
+}
+
+Vehicle <|.. Car
+Vehicle <|.. NullVehicle
+VehicleFactory --> Vehicle
+
+@enduml

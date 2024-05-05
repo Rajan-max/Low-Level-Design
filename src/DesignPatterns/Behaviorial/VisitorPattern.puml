@@ -1,0 +1,53 @@
+@startuml
+
+interface ComputerPartVisitor {
+    +visit(Computer computer)
+    +visit(Mouse mouse)
+    +visit(Keyboard keyboard)
+    +visit(Monitor monitor)
+}
+
+interface ComputerPart {
+    +accept(ComputerPartVisitor visitor)
+}
+
+class Computer {
+    -parts: ComputerPart[]
+    +Computer()
+    +accept(ComputerPartVisitor visitor)
+}
+
+class Mouse {
+    +accept(ComputerPartVisitor visitor)
+}
+
+class Keyboard {
+    +accept(ComputerPartVisitor visitor)
+}
+
+class Monitor {
+    +accept(ComputerPartVisitor visitor)
+}
+
+
+class ComputerPartDisplayVisitor {
+    +visit(Computer computer)
+    +visit(Mouse mouse)
+    +visit(Keyboard keyboard)
+    +visit(Monitor monitor)
+}
+
+ComputerPart <|--Computer
+ComputerPart <|--Mouse
+ComputerPart <|--Keyboard
+ComputerPart <|--Monitor
+ComputerPart-down->ComputerPartVisitor
+
+ComputerPartVisitor --up>Computer
+ComputerPartVisitor --up>Mouse
+ComputerPartVisitor --up>Keyboard
+ComputerPartVisitor --up>Monitor
+
+ComputerPartVisitor <|-- ComputerPartDisplayVisitor
+
+@enduml

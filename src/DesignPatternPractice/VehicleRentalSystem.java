@@ -4,11 +4,11 @@ package DesignPatternPractice;
 import java.util.ArrayList;
 import java.util.List;
 
-class User {
-    private int userId;
-    private String name;
+class User5 {
+    private final int userId;
+    private final String name;
 
-    public User(int userId, String name) {
+    public User5(int userId, String name) {
         this.userId = userId;
         this.name = name;
     }
@@ -23,8 +23,8 @@ class User {
 }
 
 abstract class Vehicle1 {
-    private int vehicleId;
-    private String type;
+    private final int vehicleId;
+    private final String type;
 
     public Vehicle1(int vehicleId, String type) {
         this.vehicleId = vehicleId;
@@ -76,7 +76,7 @@ class Payment {
 }
 
 class RentalSystem {
-    private final List<User> users;
+    private final List<User5> users;
     private final List<RentalTransaction> transactions;
     private final Store store;
     private final Payment payment;
@@ -88,11 +88,11 @@ class RentalSystem {
         this.payment = payment;
     }
 
-    public void addUser(User user) {
+    public void addUser(User5 user) {
         users.add(user);
     }
 
-    public RentalTransaction rentVehicle(User user, Vehicle1 vehicle) {
+    public RentalTransaction rentVehicle(User5 user, Vehicle1 vehicle) {
         if (store.getAvailableVehicles().contains(vehicle) && users.contains(user)) {
             RentalTransaction transaction = new RentalTransaction(transactions.size() + 1, user, vehicle, 1);
             transactions.add(transaction);
@@ -122,11 +122,11 @@ class RentalSystem {
 
 class RentalTransaction {
     private final int rentalId;
-    private final User user;
+    private final User5 user;
     private final Vehicle1 vehicle1;
     private final int rentalDuration;
 
-    public RentalTransaction(int rentalId, User user, Vehicle1 vehicle1, int rentalDuration) {
+    public RentalTransaction(int rentalId, User5 user, Vehicle1 vehicle1, int rentalDuration) {
         this.rentalId = rentalId;
         this.user = user;
         this.vehicle1 = vehicle1;
@@ -137,7 +137,7 @@ class RentalTransaction {
         return rentalId;
     }
 
-    public User getUser() {
+    public User5 getUser() {
         return user;
     }
 
@@ -153,8 +153,8 @@ class RentalTransaction {
 public class VehicleRentalSystem {
     public static void main(String[] args) {
         // Creating users
-        User user1 = new User(1, "John");
-        User user2 = new User(2, "Alice");
+        User5 user1 = new User5(1,"John");
+        User5 user2 = new User5(2, "Alice");
 
         // Creating vehicles
         TwoWheeler bike1 = new TwoWheeler(101);

@@ -1,0 +1,75 @@
+@startuml
+
+enum Direction {
+    UP, DOWN
+}
+
+class Floor {
+    -final floorNumber: int
+    +Floor(floorNumber: int)
+    +getFloorNumber(): int
+}
+
+class ElevatorCar {
+    -currentFloor: int
+    -direction: Direction
+    -internalButtonsPressed: Set<Integer>
+    -externalRequests: Queue<Integer>
+    +ElevatorCar()
+    +getCurrentFloor(): int
+    +getDirection(): Direction
+    +pressInternalButton(floorNumber: int): void
+    +isInternalButtonPressed(floorNumber: int): boolean
+    +addExternalRequest(floorNumber: int): void
+    +hasExternalRequests(): boolean
+    +getNextExternalRequest(): int
+    +move(): void
+    +changeDirection(): void
+}
+
+class Display {
+    +showFloorNumber(floorNumber: int): void
+}
+
+class InternalButton {
+    -floorNumber: int
+    +InternalButton(floorNumber: int)
+    +getFloorNumber(): int
+}
+
+class ExternalButton {
+    -floorNumber: int
+    -direction: Direction
+    +ExternalButton(floorNumber: int, direction: Direction)
+    +getFloorNumber(): int
+    +getDirection(): Direction
+}
+
+class Building {
+    -floors: List<Floor>
+    +Building(numFloors: int)
+    +getFloors(): List<Floor>
+}
+
+class ElevatorController {
+    -elevatorCar: ElevatorCar
+    -display: Display
+    -internalButtons: List<InternalButton>
+    -externalButtons: List<ExternalButton>
+    -building: Building
+    +ElevatorController(building: Building)
+    +addInternalButton(floorNumber: int): void
+    +addExternalButton(floorNumber: int, direction: Direction): void
+    +handleExternalButtonPress(): void
+    +handleInternalButtonPress(): void
+    +operateElevator(): void
+}
+
+Building *-- Floor
+ElevatorController *-- ElevatorCar
+ElevatorController *-- Display
+ElevatorController *-- InternalButton
+ElevatorController *-- ExternalButton
+ElevatorController *-- Building
+
+@enduml

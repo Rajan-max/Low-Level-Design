@@ -14,11 +14,17 @@ Let's illustrate this pattern with an example of a vending machine that dispense
 
 // Interface representing the states of the vending machine
 interface VendingMachineState {
-    void insertMoney(int amount) throws Exception;
+    default void insertMoney(int amount) throws Exception {
+        throw new Exception("Money already inserted");
+    }
 
-    void selectItem(String item) throws Exception;
+    default void selectItem(String item) throws Exception {
+        throw new Exception("Please insert money first");
+    }
 
-    void dispenseItem() throws Exception;
+    default void dispenseItem() throws Exception {
+        throw new Exception("Please insert money first");
+    }
 }
 
 // Concrete implementation of the VendingMachineState interface representing the 'NoMoneyState'
@@ -35,16 +41,6 @@ class NoMoneyState implements VendingMachineState {
         vendingMachine.setState(vendingMachine.getHasMoneyState());
     }
 
-    @Override
-    public void selectItem(String item) throws Exception {
-        throw new Exception("Please insert money first");
-
-    }
-
-    @Override
-    public void dispenseItem() throws Exception {
-        throw new Exception("Please insert money first");
-    }
 }
 
 // Concrete implementation of the VendingMachineState interface representing the 'HasMoneyState'
@@ -55,21 +51,11 @@ class HasMoneyState implements VendingMachineState {
         this.vendingMachine = vendingMachine;
     }
 
-    @Override
-    public void insertMoney(int amount) throws Exception {
-        throw new Exception("Money already inserted");
-
-    }
 
     @Override
     public void selectItem(String item) {
         System.out.println("Item " + item + " selected");
         vendingMachine.setState(vendingMachine.getSoldState());
-    }
-
-    @Override
-    public void dispenseItem() throws Exception {
-        throw new Exception("Please select an item first");
     }
 }
 
@@ -79,17 +65,6 @@ class SoldState implements VendingMachineState {
 
     public SoldState(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
-    }
-
-    @Override
-    public void insertMoney(int amount) throws Exception {
-        throw new Exception("Please wait, we're already dispensing an item");
-
-    }
-
-    @Override
-    public void selectItem(String item )throws Exception {
-        throw new Exception("Please wait, we're already dispensing an item");
     }
 
     @Override
@@ -117,6 +92,10 @@ class VendingMachine {
         this.currentState = state;
     }
 
+    public VendingMachineState getCurrentState() {
+        return currentState;
+    }
+
     public VendingMachineState getNoMoneyState() {
         return noMoneyState;
     }
@@ -129,17 +108,6 @@ class VendingMachine {
         return soldState;
     }
 
-    public void insertMoney(int amount) throws Exception {
-        currentState.insertMoney(amount);
-    }
-
-    public void selectItem(String item) throws Exception {
-        currentState.selectItem(item);
-    }
-
-    public void dispenseItem() throws Exception {
-        currentState.dispenseItem();
-    }
 }
 
 public class StatePatternExample {
@@ -147,9 +115,9 @@ public class StatePatternExample {
         VendingMachine vendingMachine = new VendingMachine();
 
         // Simulating different interactions with the vending machine
-        //vendingMachine.selectItem("Coke");
-        vendingMachine.insertMoney(5);
-        vendingMachine.selectItem("Coke");
-        vendingMachine.dispenseItem();
+        //vendingMachine.getCurrentState().selectItem("Coke");
+        vendingMachine.getCurrentState().insertMoney(5);
+        vendingMachine.getCurrentState().selectItem("Coke");
+        vendingMachine.getCurrentState().dispenseItem();
     }
 }

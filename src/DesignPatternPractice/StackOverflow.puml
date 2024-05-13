@@ -1,0 +1,75 @@
+@startuml
+
+class User {
+    - username: String
+    - password: String
+    + User(username: String, password: String)
+    // Getters and setters for user attributes
+}
+
+class Question {
+    - id: int
+    - title: String
+    - body: String
+    - author: User
+    - answers: List<Answer>
+    - comments: List<Comment>
+    - votes: int
+    + Question(id: int, title: String, body: String, author: User)
+    + addAnswer(answer: Answer): void
+    + addComment(comment: Comment): void
+    + upvote(): void
+    + downvote(): void
+    // Getters and setters for question attributes
+}
+
+class Answer {
+    - id: int
+    - body: String
+    - author: User
+    - comments: List<Comment>
+    - votes: int
+    + Answer(id: int, body: String, author: User)
+    + addComment(comment: Comment): void
+    + upvote(): void
+    + downvote(): void
+    // Getters and setters for answer attributes
+}
+
+class Comment {
+    - id: int
+    - body: String
+    - author: User
+    + Comment(id: int, body: String, author: User)
+    // Getters and setters for comment attributes
+}
+
+class Vote {
+    - user: User
+    - isUpvote: boolean
+    + Vote(user: User, isUpvote: boolean)
+    // Getters and setters for vote attributes
+}
+
+class StackOverflow {
+    - users: List<User>
+    - questions: List<Question>
+    + StackOverflow()
+    + registerUser(user: User): void
+    + postQuestion(question: Question): void
+    + answerQuestion(question: Question, answer: Answer): void
+    + commentOnQuestion(question: Question, comment: Comment): void
+    + commentOnAnswer(answer: Answer, comment: Comment): void
+    + upvoteQuestion(question: Question): void
+    + downvoteQuestion(question: Question): void
+    + upvoteAnswer(answer: Answer): void
+    + downvoteAnswer(answer: Answer): void
+}
+
+StackOverflow --> User
+StackOverflow --> Question
+StackOverflow --> Answer
+StackOverflow --> Comment
+StackOverflow --> Vote
+
+@enduml

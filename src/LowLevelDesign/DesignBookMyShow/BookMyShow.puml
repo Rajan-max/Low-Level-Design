@@ -1,0 +1,116 @@
+@startuml
+
+package Enums {
+    enum City {
+        Bangalore,
+        Delhi
+    }
+
+    enum SeatCategory {
+        SILVER,
+        GOLD,
+        PLATINUM
+    }
+}
+
+    class Movie {
+        -movieId: int
+        -movieName: String
+        -movieDurationInMinutes: int
+        +getMovieId(): int
+        +setMovieId(movieId: int): void
+        +getMovieName(): String
+        +setMovieName(movieName: String): void
+        +getMovieDuration(): int
+        +setMovieDuration(movieDuration: int): void
+    }
+
+    class MovieController {
+        -cityVsMovies: Map<City, List<Movie>>
+        -allMovies: List<Movie>
+        +MovieController()
+        +addMovie(movie: Movie, city: City): void
+        +getMovieByName(movieName: String): Movie
+        +getMoviesByCity(city: City): List<Movie>
+    }
+
+    class Payment {
+        -paymentId: int
+    }
+
+    class Screen {
+        -screenId: int
+        -seats: List<Seat>
+        +getScreenId(): int
+        +setScreenId(screenId: int): void
+        +getSeats(): List<Seat>
+        +setSeats(seats: List<Seat>): void
+    }
+
+    class Seat {
+        -seatId: int
+        -row: int
+        -seatCategory: SeatCategory
+        +getSeatId(): int
+        +setSeatId(seatId: int): void
+        +getRow(): int
+        +setRow(row: int): void
+        +getSeatCategory(): SeatCategory
+        +setSeatCategory(seatCategory: SeatCategory): void
+    }
+
+    class Show {
+        -showId: int
+        -movie: Movie
+        -screen: Screen
+        -showStartTime: int
+        -bookedSeatIds: List<Integer>
+        +getShowId(): int
+        +setShowId(showId: int): void
+        +getMovie(): Movie
+        +setMovie(movie: Movie): void
+        +getScreen(): Screen
+        +setScreen(screen: Screen): void
+        +getShowStartTime(): int
+        +setShowStartTime(showStartTime: int): void
+        +getBookedSeatIds(): List<Integer>
+        +setBookedSeatIds(bookedSeatIds: List<Integer>): void
+    }
+
+    class Theatre {
+        -theatreId: int
+        -address: String
+        -city: City
+        -screen: List<Screen>
+        -shows: List<Show>
+        +getTheatreId(): int
+        +setTheatreId(theatreId: int): void
+        +getAddress(): String
+        +setAddress(address: String): void
+        +getScreen(): List<Screen>
+        +setScreen(screen: List<Screen>): void
+        +getShows(): List<Show>
+        +setShows(shows: List<Show>): void
+        +getCity(): City
+        +setCity(city: City): void
+    }
+
+    class TheatreController {
+        -cityVsTheatre: Map<City, List<Theatre>>
+        -allTheatre: List<Theatre>
+        +TheatreController()
+        +addTheatre(theatre: Theatre, city: City): void
+        +getAllShow(movie: Movie, city: City): Map<Theatre, List<Show>>
+    }
+
+
+    Theatre --> Screen : has
+    Theatre -->City: has
+    Theatre --> Show : has
+    Screen --> Seat : has
+    TheatreController -->Theatre
+    MovieController --> Movie
+    Show --> Screen
+    Show -->Movie: has
+
+@enduml

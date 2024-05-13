@@ -95,13 +95,11 @@ class DrawingAPIPencil implements DrawingAPI {
 // Client
 public class BridgePatternExample {
     public static void main(String[] args) {
-        DrawingAPI pen = new DrawingAPIPen();
-        DrawingAPI pencil = new DrawingAPIPencil();
 
-        Shape circle = new Circle(1, 2, 3, pen);
+        Shape circle = new Circle(1, 2, 3, new DrawingAPIPen());
         circle.draw();
 
-        Shape square = new Square(4, 5, 6, pencil);
+        Shape square = new Square(4, 5, 6, new DrawingAPIPencil());
         square.draw();
     }
 }

@@ -1,0 +1,130 @@
+@startuml
+
+enum SeatCategory {
+    SILVER,
+    GOLD,
+    PLATINUM
+}
+
+enum City {
+    Bangalore,
+    Hyderabad,
+    Chennai
+}
+
+class User1 {
+    - userId: String
+    - name: String
+    + User1(userId: String, name: String)
+    // Getters for user attributes
+}
+
+class Seat {
+    - seatCategory: SeatCategory
+    - seatId: int
+    - isBooked: boolean
+    + Seat()
+    + getSeatId(): int
+    + setSeatId(seatId: int): void
+    + isBooked(): boolean
+    + setBooked(booked: boolean): void
+    + getSeatCategory(): SeatCategory
+    + setSeatCategory(seatCategory: SeatCategory): void
+}
+
+class Screen {
+    - lock: Lock
+    - screenId: int
+    - seats: List<Seat>
+    + Screen()
+    + getScreenId(): int
+    + setScreenId(screenId: int): void
+    + getSeats(): List<Seat>
+    + setSeats(seats: List<Seat>): void
+    + getLock(): Lock
+}
+
+class Movie {
+    - movieName: String
+    - movieDuration: String
+    + Movie()
+    + getMovieName(): String
+    + setMovieName(movieName: String): void
+    + getMovieDuration(): String
+    + setMovieDuration(movieDuration: String): void
+}
+
+class Show {
+    - showId: int
+    - movie: Movie
+    - timing: String
+    + Show()
+    + getShowId(): int
+    + setShowId(showId: int): void
+    + getMovie(): Movie
+    + setMovie(movie: Movie): void
+    + getTiming(): String
+    + setTiming(timing: String): void
+}
+
+class Theatre {
+    - theatreId: int
+    - name: String
+    - shows: List<Show>
+    - screens: List<Screen>
+    + Theatre()
+    + getTheatreId(): int
+    + setTheatreId(theatreId: int): void
+    + getName(): String
+    + setName(name: String): void
+    + getShows(): List<Show>
+    + setShows(shows: List<Show>): void
+    + getScreens(): List<Screen>
+    + setScreens(screens: List<Screen>): void
+}
+
+class TheatreController {
+    - cityTheatreMap: Map<String, List<Theatre>>
+    + TheatreController()
+    + addTheatre(city: String, theatre: Theatre): void
+    + getAllTheatre(city: String): List<Theatre>
+}
+
+class Booking {
+    - bookingId: String
+    - show: Show
+    - seat: Seat
+    - user: User1
+    + Booking(bookingId: String, show: Show, seat: Seat, user: User1)
+}
+
+class Payment1 {
+    + processPayment(booking: Booking): void
+}
+
+class MovieBookingSystemProcessor {
+    - bookings: Map<String, Booking>
+    - theatreController: TheatreController
+    + MovieBookingSystemProcessor(theatreController: TheatreController)
+    + bookTicket(cityName: String, movieName: String, time: String, seatId: int, user: User1): Booking
+    + cancelTicket(bookingId: String): boolean
+}
+
+class MovieBookingSystem {
+    - theatreController: TheatreController
+    - movieBookingSystemProcessor: MovieBookingSystemProcessor
+    + MovieBookingSystem()
+    + initialize(): void
+    + bookTicket(cityName: String, movieName: String, time: String, seatId: int, user: User1): Booking
+}
+
+User1 --{ Booking
+Booking --{ MovieBookingSystemProcessor
+Movie --{ Show
+Show --{ Theatre
+Theatre --{ MovieBookingSystem
+Screen --{ Theatre
+Seat --{ Screen
+TheatreController --{ MovieBookingSystemProcessor
+
+@enduml

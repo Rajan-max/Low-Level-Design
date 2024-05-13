@@ -156,7 +156,7 @@ public class BookMyShow {
             seats.add(seat);
         }
 
-        //41 to 70 : SILVER
+        //41 to 70 : GOLD
         for (int i = 40; i < 70; i++) {
             Seat seat = new Seat();
             seat.setSeatId(i);
@@ -164,7 +164,7 @@ public class BookMyShow {
             seats.add(seat);
         }
 
-        //1 to 40 : SILVER
+        //1 to 40 : PLATINUM
         for (int i = 70; i < 100; i++) {
             Seat seat = new Seat();
             seat.setSeatId(i);

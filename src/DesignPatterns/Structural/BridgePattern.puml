@@ -1,0 +1,50 @@
+@startuml
+
+interface DrawingAPI {
+    {abstract} drawCircle(x: double, y: double, radius: double)
+    {abstract} drawSquare(x: double, y: double, side: double)
+}
+
+class DrawingAPIPen {
+    + drawCircle(x: double, y: double, radius: double)
+    + drawSquare(x: double, y: double, side: double)
+}
+
+class DrawingAPIPencil {
+    + drawCircle(x: double, y: double, radius: double)
+    + drawSquare(x: double, y: double, side: double)
+}
+
+abstract class Shape {
+    - drawingAPI: DrawingAPI
+    + Shape(drawingAPI: DrawingAPI)
+    {abstract} draw()
+}
+
+class Circle {
+    - x: double
+    - y: double
+    - radius: double
+    + Circle(x: double, y: double, radius: double, drawingAPI: DrawingAPI)
+    + draw()
+}
+
+class Square {
+    - x: double
+    - y: double
+    - side: double
+    + Square(x: double, y: double, side: double, drawingAPI: DrawingAPI)
+    + draw()
+}
+
+DrawingAPI <|-- DrawingAPIPen
+DrawingAPI <|-- DrawingAPIPencil
+
+Shape <|-- Circle
+Shape <|-- Square
+
+
+Shape -right-> DrawingAPI
+
+
+@enduml

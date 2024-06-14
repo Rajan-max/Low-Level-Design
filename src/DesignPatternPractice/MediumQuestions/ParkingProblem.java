@@ -1,4 +1,4 @@
-package DesignPatternPractice;
+package DesignPatternPractice.MediumQuestions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +35,12 @@ class Vehicle {
 class ParkingSpot {
     private final int spotNumber;
     private boolean available;
-    private Vehicle vehicle;
+    private Vehicle vehicles;
 
     public ParkingSpot(int spotNumber) {
         this.spotNumber = spotNumber;
         this.available = true;
-        this.vehicle = null;
+        this.vehicles = null;
     }
 
     public int getSpotNumber() {
@@ -52,16 +52,16 @@ class ParkingSpot {
     }
 
     public Vehicle getVehicle() {
-        return vehicle;
+        return vehicles;
     }
 
-    public void parkVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
+    public void parkVehicle(Vehicle vehicles) {
+        this.vehicles = vehicles;
         this.available = false;
     }
 
     public void removeVehicle() {
-        this.vehicle = null;
+        this.vehicles = null;
         this.available = true;
     }
 }
@@ -104,22 +104,22 @@ class ParkingController {
         this.parkingLot = parkingLot;
     }
 
-    public ParkingSpot parkVehicle(Vehicle vehicle) {
+    public ParkingSpot parkVehicle(Vehicle vehicles) {
         for (ParkingSpot spot : parkingLot.getSpots()) {
             if (spot.isAvailable()) {
-                spot.parkVehicle(vehicle);
+                spot.parkVehicle(vehicles);
                 return spot;
             }
         }
         return null; // No available spots
     }
 
-    public double removeVehicle(Vehicle vehicle) {
+    public double removeVehicle(Vehicle vehicles) {
         for (ParkingSpot spot : parkingLot.getSpots()) {
-            if (!spot.isAvailable() && Objects.equals(spot.getVehicle().getVehicleNumber(), vehicle.getVehicleNumber())) {
+            if (!spot.isAvailable() && Objects.equals(spot.getVehicle().getVehicleNumber(), vehicles.getVehicleNumber())) {
                 spot.removeVehicle();
                 PaymentProcess paymentProcess;
-                if (vehicle.getType().equals(VehicleType.CAR)) {  //Can be more scale using factory-pattern
+                if (vehicles.getType().equals(VehicleType.CAR)) {  //Can be more scale using factory-pattern
                     paymentProcess = new FourWheelerPayment();
                 } else {
                     paymentProcess = new TwoWheelerPayment();

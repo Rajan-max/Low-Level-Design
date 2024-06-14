@@ -1,4 +1,4 @@
-package DesignPatternPractice;
+package DesignPatternPractice.MediumQuestions;
 
 
 import java.util.*;

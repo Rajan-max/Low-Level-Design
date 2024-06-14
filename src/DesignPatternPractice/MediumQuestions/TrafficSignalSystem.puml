@@ -1,0 +1,52 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+enum TrafficLightState {
+  RED
+  YELLOW
+  GREEN
+}
+
+class TrafficLight {
+  - TrafficLightState state
+  - int greenDuration
+  - int yellowDuration
+  - int redDuration
+  + TrafficLight(int greenDuration, int yellowDuration, int redDuration)
+  + TrafficLightState getState()
+  + void setState(TrafficLightState state)
+  + int getGreenDuration()
+  + int getYellowDuration()
+  + int getRedDuration()
+}
+
+class IntersectionController {
+  - List<TrafficLight> trafficLights
+  - int currentLightIndex
+  - boolean emergencyMode
+  + IntersectionController(List<TrafficLight> trafficLights)
+  + void switchSignal()
+  + void setEmergencyMode(boolean emergencyMode)
+  - TrafficLightState getNextState(TrafficLightState state)
+}
+
+class TrafficSignalSystem {
+  - List<IntersectionController> intersectionControllers
+  + TrafficSignalSystem(List<IntersectionController> intersectionControllers)
+  + void switchAllSignals()
+  + void setEmergencyModeForAll(boolean emergencyMode)
+}
+
+class ControlPanel {
+  - TrafficSignalSystem trafficSignalSystem
+  + ControlPanel(TrafficSignalSystem trafficSignalSystem)
+  + void switchAllSignals()
+  + void enableEmergencyMode()
+  + void disableEmergencyMode()
+}
+
+TrafficLight --> TrafficLightState
+IntersectionController "1" --> "*" TrafficLight
+TrafficSignalSystem "1" --> "*" IntersectionController
+ControlPanel "1" --> "1" TrafficSignalSystem
+@enduml

@@ -1,4 +1,4 @@
-package DesignPatternPractice;
+package DesignPatternPractice.EasyQuestions;
 
 
 import java.util.*;
@@ -21,8 +21,8 @@ class Question {
     private String title;
     private String body;
     private User author;
-    private List<Answer> answers;
-    private List<Comment> comments;
+    private final List<Answer> answers;
+    private final List<Comment> comments;
     private int votes;
 
     public Question(int id, String title, String body, User author) {
@@ -41,6 +41,16 @@ class Question {
 
     public void addComment(Comment comment) {
         comments.add(comment);
+    }
+    public String getBody(){
+        return body;
+    }
+
+    public String getTitle(){
+        return title;
+    }
+    public List<Answer>getAnswers(){
+        return answers;
     }
 
     public void upvote() {
@@ -79,6 +89,10 @@ class Answer {
 
     public void downvote() {
         votes--;
+    }
+
+    public String getBody(){
+        return body;
     }
 
     // Getters and setters for answer attributes
@@ -154,6 +168,21 @@ class StackOverflow {
     public void downvoteAnswer(Answer answer) {
         answer.downvote();
     }
+    public void getAnswerToQuestion(String askedQuestion){
+        boolean flag=false;
+        for(Question question:questions){
+            if(question.getBody().equalsIgnoreCase(askedQuestion) || question.getTitle().equalsIgnoreCase(askedQuestion)){
+                flag=true;
+                for (Answer answer:question.getAnswers()){
+                    System.out.println(answer.getBody());
+                }
+            }
+        }
+        if(!flag){
+            System.out.println("Something went Wrong!!");
+        }
+
+    }
 }
 
 public class StackOverflowDriver {
@@ -177,9 +206,14 @@ public class StackOverflowDriver {
         Answer a1 = new Answer(1, "You can start by defining classes like User, Question, Answer, etc.", user2);
         stackOverflow.answerQuestion(q1, a1);
 
+        Answer a2=new Answer(1, "You can Start by designing uml diagram first and then proceed with coding",user2);
+        stackOverflow.answerQuestion(q1,a2);
+
         // Commenting on questions and answers
         Comment comment1 = new Comment(1, "This is a helpful answer!", user1);
         stackOverflow.commentOnAnswer(a1, comment1);
+
+        stackOverflow.getAnswerToQuestion("How to implement StackOverflow?");
 
         // Voting on questions and answers
         stackOverflow.upvoteQuestion(q1);

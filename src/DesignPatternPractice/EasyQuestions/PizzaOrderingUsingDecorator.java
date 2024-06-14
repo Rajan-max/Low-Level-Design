@@ -1,4 +1,4 @@
-package DesignPatternPractice;
+package DesignPatternPractice.EasyQuestions;
 
 /*
      abstract class or interface

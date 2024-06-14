@@ -1,0 +1,102 @@
+@startuml
+
+'!define VEHICLE_ABSTRACT class Vehicle <<abstract>>
+
+abstract class Vehicle {
+  -String registrationNumber
+  -VehicleType type
+  -String model
+  -boolean isAvailable
+  +Vehicle(String registrationNumber, VehicleType type, String model)
+  +String getRegistrationNumber()
+  +VehicleType getType()
+  +String getModel()
+  +boolean isAvailable()
+  +void setAvailable(boolean available)
+}
+
+class Car {
+  +Car(String registrationNumber, VehicleType type, String model)
+}
+
+class Bike {
+  +Bike(String registrationNumber, VehicleType type, String model)
+}
+
+Vehicle <|-- Car
+Vehicle <|-- Bike
+
+enum VehicleType {
+  SEDAN
+  SUV
+  HATCHBACK
+  CONVERTIBLE
+  MOTORBIKE
+  SCOOTER
+}
+
+enum RentalStatus {
+  ONGOING
+  COMPLETED
+}
+
+class Customer {
+  -String id
+  -String name
+  -String drivingLicense
+  +Customer(String id, String name, String drivingLicense)
+  +String getId()
+  +String getName()
+  +String getDrivingLicense()
+}
+
+class Rental {
+  -String rentalId
+  -Vehicle vehicle
+  -Customer customer
+  -Date rentalDate
+  -Date returnDate
+  -RentalStatus status
+  +Rental(String rentalId, Vehicle vehicle, Customer customer, Date rentalDate)
+  +String getRentalId()
+  +Vehicle getVehicle()
+  +Customer getCustomer()
+  +Date getRentalDate()
+  +Date getReturnDate()
+  +RentalStatus getStatus()
+  +void completeRental(Date returnDate)
+}
+
+class VehicleFactory {
+  +static Vehicle createVehicle(String registrationNumber, VehicleType type, String model)
+}
+
+class CustomerFactory {
+  +static Customer createCustomer(String id, String name, String drivingLicense)
+}
+
+class VehicleRentalSystem {
+  -static VehicleRentalSystem instance
+  -List<Vehicle> vehicles
+  -List<Customer> customers
+  -Map<String,Rental> rentalMap
+  -VehicleRentalSystem()
+  +static VehicleRentalSystem getInstance()
+  +void addVehicle(Vehicle vehicle)
+  +void removeVehicle(String registrationNumber)
+  +List<Vehicle> getAvailableVehicles()
+  +void addCustomer(Customer customer)
+  +Rental rentVehicle(VehicleType vehicleType, String customerId)
+  +void returnVehicle(String rentalId, Date returnDate)
+  +List<Rental> getRentalHistory()
+}
+
+VehicleFactory --> Vehicle
+CustomerFactory --> Customer
+VehicleRentalSystem --> Vehicle
+VehicleRentalSystem --> Customer
+VehicleRentalSystem --> Rental
+Rental --> Vehicle
+Rental --> Customer
+
+@enduml

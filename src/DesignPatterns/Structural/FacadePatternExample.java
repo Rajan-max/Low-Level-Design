@@ -50,7 +50,7 @@ class Projector {
     }
 
     public void off() {
-        System.out.println("Projector is off.");
+        System.out.println("Projector is off tt.");
     }
 
     public void wideScreenMode() {
